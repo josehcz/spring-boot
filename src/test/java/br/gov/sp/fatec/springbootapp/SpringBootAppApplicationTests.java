@@ -75,36 +75,36 @@ class SpringBootAppApplicationTests {
 	@Test
 	void testaUsuario() {
 		Autorizacao aut = autRepo.findById(1L).get();
-		assertEquals("admin", aut.getUsuarios().iterator().next().getNome());
+		assertEquals("Jose", aut.getUsuarios().iterator().next().getNome());
 	}
 
 	@Test
 	void testaBuscaUsuarioNomeContains() {
-		List<Usuario> usuario = usuarioRepo.findByNomeContainsIgnoreCase("D");
+		List<Usuario> usuario = usuarioRepo.findByNomeContainsIgnoreCase("O");
 		assertFalse(usuario.isEmpty());
 	}
 
 	@Test
 	void testaBuscaUsuarioPeloNome() {
-		Usuario usuario = usuarioRepo.findByNome("admin");
+		Usuario usuario = usuarioRepo.findByNome("Jose");
 		assertNotNull(usuario);
 	}
 
 	@Test
 	void testaBuscaUsuarioPeloNomeQuery() {
-		Usuario usuario = usuarioRepo.BuscaPorNome("admin");
+		Usuario usuario = usuarioRepo.BuscaPorNome("Jose");
 		assertNotNull(usuario);
 	}
 
 	@Test
 	void testaBuscaUsuarioPeloNomeSenha() {
-		Usuario usuario = usuarioRepo.findByNomeAndSenha("admin","$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C");
+		Usuario usuario = usuarioRepo.findByNomeAndSenha("Jose","Teste@123");
 		assertNotNull(usuario);
 	}
 
 	@Test
 	void testaBuscaUsuarioPeloNomeSenhaQuery() {
-		Usuario usuario = usuarioRepo.BuscaPorNomeSenha("admin","$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C");
+		Usuario usuario = usuarioRepo.BuscaPorNomeSenha("Jose","Teste@123");
 		assertNotNull(usuario);
 	}
 
