@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +15,7 @@ import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import br.gov.sp.fatec.springbootapp.repository.AutorizacaoRepository;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
+import br.gov.sp.fatec.springbootapp.service.SegurancaService;
 
 @SpringBootTest
 @Transactional
@@ -25,6 +27,9 @@ class SpringBootAppApplicationTests {
 
 	@Autowired
 	private AutorizacaoRepository autRepo;
+
+	@Autowired
+	private SegurancaService segService;
 
 	@Test
 	void contextLoads() {
@@ -45,6 +50,23 @@ class SpringBootAppApplicationTests {
 	}
 
 	@Test
+	void testaInsercaoAutorizacao(){
+		Usuario usuario = new Usuario();
+		usuario.setNome("teste2");
+		usuario.setSenha("senhaTeste");
+		usuarioRepo.save(usuario);
+		Autorizacao aut = new Autorizacao();
+		aut.setNome("ROLE_USUARIO2");
+		aut.setUsuarios(new HashSet<Usuario>());
+		aut.getUsuarios().add(usuario);
+		autRepo.save(aut);
+		assertNotNull(aut.getUsuarios().iterator().next().getId());
+	}
+
+
+
+
+	@Test
 	void testaAutorizacao() {
 		Usuario usuario = usuarioRepo.findById(1L).get();
 		assertEquals("ROLE_ADMIN", usuario.getAutorizacoes().iterator().next().getNome());
@@ -56,5 +78,52 @@ class SpringBootAppApplicationTests {
 		assertEquals("admin", aut.getUsuarios().iterator().next().getNome());
 	}
 
+	@Test
+	void testaBuscaUsuarioNomeContains() {
+		List<Usuario> usuario = usuarioRepo.findByNomeContainsIgnoreCase("D");
+		assertFalse(usuario.isEmpty());
+	}
+
+	@Test
+	void testaBuscaUsuarioPeloNome() {
+		Usuario usuario = usuarioRepo.findByNome("admin");
+		assertNotNull(usuario);
+	}
+
+	@Test
+	void testaBuscaUsuarioPeloNomeQuery() {
+		Usuario usuario = usuarioRepo.BuscaPorNome("admin");
+		assertNotNull(usuario);
+	}
+
+	@Test
+	void testaBuscaUsuarioPeloNomeSenha() {
+		Usuario usuario = usuarioRepo.findByNomeAndSenha("admin","$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C");
+		assertNotNull(usuario);
+	}
+
+	@Test
+	void testaBuscaUsuarioPeloNomeSenhaQuery() {
+		Usuario usuario = usuarioRepo.BuscaPorNomeSenha("admin","$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C");
+		assertNotNull(usuario);
+	}
+
+	@Test
+	void testaBuscaUsuarioPeloNomeAutorizacao() {
+		List<Usuario> usuario = usuarioRepo.findByAutorizacoesNome("ROLE_ADMIN");
+		assertFalse(usuario.isEmpty());
+	}
+
+	@Test
+	void testaBuscaUsuarioPeloNomeAutorizacaoQuery() {
+		List<Usuario> usuario = usuarioRepo.buscaPorNomeAutorizacao("ROLE_ADMIN");
+		assertFalse(usuario.isEmpty());
+	}
+
+	@Test
+	void testeServicoCriaUsuario(){
+		Usuario usuario = segService.criarUsuario("normal", "teste", "ROLE_USUARIO");
+		assertNotNull(usuario);
+	}
 
 }
