@@ -1,0 +1,15 @@
+br\gov\sp\fatec\springbootapp\exception\RegistroNaoEncontradoExcption.class
+br\gov\sp\fatec\springbootapp\service\SegurancaService.class
+br\gov\sp\fatec\springbootapp\repository\UsuarioRepository.class
+br\gov\sp\fatec\springbootapp\entity\Usuario.class
+br\gov\sp\fatec\springbootapp\repository\AutorizacaoRepository.class
+br\gov\sp\fatec\springbootapp\SpringBootAppApplication.class
+br\gov\sp\fatec\springbootapp\controler\View$AutorizacaoResumo.class
+br\gov\sp\fatec\springbootapp\service\SegurancaServiceImpl.class
+br\gov\sp\fatec\springbootapp\controler\View$UsuarioResumo.class
+br\gov\sp\fatec\springbootapp\controler\UsuarioControler.class
+br\gov\sp\fatec\springbootapp\controler\View.class
+br\gov\sp\fatec\springbootapp\controler\HomeControler.class
+br\gov\sp\fatec\springbootapp\security\SecurityConfig.class
+br\gov\sp\fatec\springbootapp\controler\View$UsuarioCompleto.class
+br\gov\sp\fatec\springbootapp\entity\Autorizacao.class
